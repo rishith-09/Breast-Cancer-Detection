@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Detection</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body{
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background: #c8e8e9;
+        }
+        .container{
+            max-width: 800px;
+            width: 100%;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        }
+        .container .title{
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+            align-items: center;
+        }
+        .container .title::before{
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            background: #3e2093;
+        }
+        .container form .user-details{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 0 12px 0;
+        }
+        form .user-details .input{
+            margin-bottom: 15px;
+            width: calc(100% / 3 - 20px);
+        }
+        .user-details .input .details{
+            display: block;
+            font-weight: 550;
+            margin-bottom: 5px;
+        }
+        .user-details .input select{
+            height: 23px;
+            width: 90%;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding-left: 15px;
+            font-size: 14px;
+        }     
+        form .button{
+            height: 45px;
+            margin: 45px 0;
+        }
+        form .button input{
+            height: 100%;
+            width: 100%;
+            outline: none;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            font-weight: 500;
+            border-radius: 5px;
+            letter-spacing: 1px;
+            background: #3e2093;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        form .button input:hover{
+            background: #9c35c5;
+        }
+        @media (max-width: 584px){
+            .container{
+                max-width: 100%;
+            }
+            form .user-details .input{
+                margin-bottom: 15px;
+                width: 100;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title"><strong>Breast Cancer Detection</strong></div>
+        <br/>
+
+        <form action="{{url_for('predict')}}" method="post">
+            <div class="user-details">
+
+                <div class="input">
+                    <span class="details">Clump Thickness</span>
+                    <select id="clump" name="clump" required>
+                        <option value="" disabled selected hidden>Clump Thickness</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                
+                <div class="input">
+                    <span class="details">Uniformity of Cell Size</span>
+                    <select id="size" name="size" required>
+                        <option value="" disabled selected hidden>Uniformity of Cell Size</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <span class="details">Uniformity of Cell Shape</span>
+                    <select id="shape" name="shape" required>
+                        <option value="" disabled selected hidden>Uniformity of Cell Shape</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <span class="details">Marginal Adhesion</span>
+                    <select id="adhesion" name="adhesion"required>
+                        <option value="" disabled selected hidden>Marginal Adhesion</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <span class="details">Single Epithelial Cell Size</span>
+                    <select id="epithelial" name="epithelial" required>
+                        <option value="" disabled selected hidden>Single Epithelial Cell Size</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <span class="details">Bare Nuclei</span>
+                    <select id="nuclei" name="nuclei" required>
+                        <option value="" disabled selected hidden>Bare Nuclei</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <span class="details">Bland Chromatin</span>
+                    <select id="chromatin" name="chromatin" required>
+                        <option value="" disabled selected hidden>Bland Chromatin</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <span class="details">Normal Nucleoli</span>
+                    <select id="nucleoli" name="nucleoli" required>
+                        <option value="" disabled selected hidden>Normal Nucleoli</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="input">
+                    <span class="details">Mitoses</span>
+                    <select id="mitoses" name="mitoses" required>
+                        <option value="" disabled selected hidden>Mitoses</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                
+            </div>
+
+            <div class="button">
+                <input type="submit" value="PREDICT">
+            </div>
+        </form>
+        <div class="pred"><h3>{{prediction_text}}</h3></div>
+    </div>
+</body>
+</html>
